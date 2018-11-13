@@ -6,6 +6,14 @@ class Track implements Serializable {
     String trackName;
     String latitude;
     String longitude;
+    String videoUrl;
+
+    public Track(String trackName, String latitude, String longitude, String videoUrl) {
+        this.trackName = trackName;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.videoUrl = videoUrl;
+    }
 
     public String getTrackName() {
         return trackName;
@@ -31,10 +39,11 @@ class Track implements Serializable {
         this.longitude = longitude;
     }
 
-    public Track(String trackName, String latitude, String longitude) {
+    public String getVideoUrl() {
+        return videoUrl;
+    }
 
-        this.trackName = trackName;
-        this.latitude = latitude;
-        this.longitude = longitude;
+    public void setVideoUrl(String videoUrl) {
+        this.videoUrl = videoUrl;
     }
 }
