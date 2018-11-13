@@ -1,64 +1,59 @@
 package com.ucdandroidproject.shivamvarunanas.project;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+
+import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity_Screen2 extends AppCompatActivity implements GetFlickrJsonData.OnDataAvailable {
-    private static final String TAG = "MainActivity";
+public class MainActivity_Screen2 extends AppCompatActivity implements View.OnClickListener{
+    private static final String TAG = "MainActivity_Screen2";
+    List<Track> tracks = new ArrayList<>();
+    Button track1;
+    Button track2;
+    void initializeTracks(){
+        Track track = new Track("UCD","", "");
+        tracks.add(track);
+        track = new Track("Blackrock Dublin", "", "" );
+        tracks.add(track);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d(TAG, "onCreate: starts");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_screen2);
-
-
-//        GetRawData getRawData = new GetRawData(this);
-//        getRawData.execute("https://api.flickr.com/services/feeds/photos_public.gne?tags=android,nougat,sdk&tagmode=any&format=json&nojsoncallback=1");
-
-        Log.d(TAG, "onCreate: ends");
+        setContentView(R.layout.activity_main__screen2);
+        initializeTracks();
+        track1 = findViewById(R.id.button_ucd);
+        track2 = findViewById(R.id.button_blackrock);
     }
 
     @Override
     protected void onResume() {
-        Log.d(TAG, "onResume starts");
         super.onResume();
-        GetFlickrJsonData getFlickrJsonData = new GetFlickrJsonData(this, "https://api.flickr.com/services/feeds/photos_public.gne", "en-us", true);
-//        getFlickrJsonData.executeOnSameThread("android, nougat");
-        getFlickrJsonData.execute("android,nougat");
-        Log.d(TAG, "onResume ends");
+        track1.setOnClickListener(this);
+        track2.setOnClickListener(this);
     }
-
-
-
-
 
     @Override
-    public void onDataAvailable(List<Photo> data, DownloadStatus status) {
-        if(status == DownloadStatus.OK) {
-            Log.d(TAG, "onDataAvailable: data is " + data);
-        } else {
-            // download or processing failed
-            Log.e(TAG, "onDataAvailable failed with status " + status);
+    public void onClick(View v) {
+        int id = v.getId();
+        Intent intent = new Intent(this, TrackDetails.class);
+        switch (id){
+            case R.id.ucd_image :
+
+            case R.id.button_ucd:
+                intent.putExtra("TRACK", tracks.get(0));
+                break;
+            case R.id.blackrock_image :
+            case R.id.button_blackrock:
+                intent.putExtra("TRACK", tracks.get(1));
+                break;
         }
+        Log.d(TAG, "onClick: Before starting");
+        startActivity(intent);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

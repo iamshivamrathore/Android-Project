@@ -1,6 +1,12 @@
 package com.ucdandroidproject.shivamvarunanas.project;
 
-class Photo {
+import java.io.Serializable;
+
+/*Created by Shivam Rathore
+* 
+* */
+class Photo implements Serializable {
+
 
     private String mTitle;
     private String mAuthor;
