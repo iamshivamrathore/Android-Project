@@ -1,5 +1,6 @@
 package com.ucdandroidproject.shivamvarunanas.project;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.util.Log;
@@ -13,14 +14,15 @@ import com.google.android.youtube.player.YouTubePlayerView;
 
 public class YoutubeActivity extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener {
 
-    static final String GOOGLE_API_KEY = "SIzaSyCyQYUL038m3VrRg-76RMQUIDny6BhIzAc";
+    static final String GOOGLE_API_KEY = "AIzaSyCyQYUL038m3VrRg-76RMQUIDny6BhIzAc";
 
-    static  String YOUTUBE_VIDEO_ID = "EqPtz5qN7HM";
+    static  String YOUTUBE_VIDEO_ID ;
 
     private static final String TAG = "YoutubeActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_youtube);
         ConstraintLayout constraintLayout = (ConstraintLayout) getLayoutInflater().inflate(R.layout.activity_youtube, null);
@@ -31,6 +33,13 @@ public class YoutubeActivity extends YouTubeBaseActivity implements YouTubePlaye
         youTubePlayerView.setLayoutParams(new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         constraintLayout.addView(youTubePlayerView);
         youTubePlayerView.initialize(GOOGLE_API_KEY, this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Track track = (Track) getIntent().getSerializableExtra("TRACK");
+        YOUTUBE_VIDEO_ID = track.getVideoUrl();
     }
 
     @Override
