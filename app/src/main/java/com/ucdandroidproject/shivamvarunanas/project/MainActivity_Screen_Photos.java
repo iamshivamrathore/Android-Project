@@ -10,22 +10,23 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity_Screen_Photos extends BaseActivity implements GetFlickrJsonData.OnDataAvailable, RecyclerItemClickListener.OnRecyclerClickListener {
+public class MainActivity_Screen_Photos extends BaseActivity implements GetDataFromFlickr_JSON.OnDataAvailable, RecyclerItemClickListener.OnRecyclerClickListener {
     private static final String TAG = "MainActivity";
     private FlickrRecyclerViewAdapter flickrRecyclerViewAdapter;
+    Track track = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate: starts");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen_photos);
-        activateToolbar(true);
+        enableBackToHomeToolbar(true);
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, recyclerView, this));
         flickrRecyclerViewAdapter = new FlickrRecyclerViewAdapter(this, new ArrayList<Photo>());
         recyclerView.setAdapter(flickrRecyclerViewAdapter);
-
+        setTitle("Track");
 //        GetRawData getRawData = new GetRawData(this);
 //        getRawData.execute("https://api.flickr.com/services/feeds/photos_public.gne?tags=android,nougat,sdk&tagmode=any&format=json&nojsoncallback=1");
 
@@ -51,12 +52,15 @@ public class MainActivity_Screen_Photos extends BaseActivity implements GetFlick
     @Override
     protected void onResume() {
         Intent intent1 = getIntent();
-        Track track = (Track)intent1.getSerializableExtra("TRACK");
+        if(track == null) {
+            track = (Track) intent1.getSerializableExtra("TRACK");
+        }
         Log.d(TAG, "onResume starts with intent : "+track.getTrackName());
         super.onResume();
-        GetFlickrJsonData getFlickrJsonData = new GetFlickrJsonData(this, "https://api.flickr.com/services/feeds/photos_public.gne", "en-us", false);
-//        getFlickrJsonData.executeOnSameThread("android, nougat");
-        getFlickrJsonData.execute(track.getTrackName());
+        GetDataFromFlickr_JSON getDataFromFlickrJSON = new GetDataFromFlickr_JSON(this, "https://api.flickr.com/services/feeds/photos_public.gne", "en-us", false);
+//        getDataFromFlickrJSON.executeOnSameThread("android, nougat");
+        getDataFromFlickrJSON.execute(track.getTrackName());
+        setTitle(track.getTrackName());
         Log.d(TAG, "onResume ends");
     }
 

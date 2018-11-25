@@ -9,8 +9,9 @@ public class BaseActivity extends AppCompatActivity {
     static final String PHOTO_TRANSFER = "PHOTO_TRANSFER";
     private static final String TAG = "BaseActivity";
 
-    void activateToolbar(boolean enableHome) {
-        Log.d(TAG, "activateToolbar: ");
+
+    void enableBackToHomeToolbar    (boolean enableHome) {
+        Log.d(TAG, "enableBackToHomeToolbar: ");
         ActionBar actionBar = getSupportActionBar();
 
         if (actionBar == null) {

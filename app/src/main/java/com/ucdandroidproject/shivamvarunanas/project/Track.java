@@ -7,12 +7,14 @@ class Track implements Serializable {
     String latitude;
     String longitude;
     String videoUrl;
+    int trackId;
 
-    public Track(String trackName, String latitude, String longitude, String videoUrl) {
+    public Track(String trackName, String latitude, String longitude, String videoUrl, int trackId) {
         this.trackName = trackName;
         this.latitude = latitude;
         this.longitude = longitude;
         this.videoUrl = videoUrl;
+        this.trackId = trackId;
     }
 
     public String getTrackName() {

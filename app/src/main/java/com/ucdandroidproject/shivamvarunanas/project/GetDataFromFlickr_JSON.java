@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-class GetFlickrJsonData extends AsyncTask<String, Void, List<Photo>> implements GetRawData.OnDownloadComplete {
-    private static final String TAG = "GetFlickrJsonData";
+class GetDataFromFlickr_JSON extends AsyncTask<String, Void, List<Photo>> implements GetRawData.OnDownloadComplete {
+    private static final String TAG = "GetDataFromFlickr_JSON";
 
     private List<Photo> mPhotoList = null;
     private String mBaseURL;
@@ -27,8 +27,8 @@ class GetFlickrJsonData extends AsyncTask<String, Void, List<Photo>> implements 
         void onDataAvailable(List<Photo> data, DownloadStatus status);
     }
 
-    public GetFlickrJsonData(OnDataAvailable callBack, String baseURL, String language, boolean matchAll) {
-        Log.d(TAG, "GetFlickrJsonData called");
+    public GetDataFromFlickr_JSON(OnDataAvailable callBack, String baseURL, String language, boolean matchAll) {
+        Log.d(TAG, "GetDataFromFlickr_JSON called");
         mBaseURL = baseURL;
         mCallBack = callBack;
         mLanguage = language;

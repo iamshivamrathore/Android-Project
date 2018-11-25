@@ -13,7 +13,7 @@ public class PhotoDetailActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo_detail);
-        activateToolbar(true);
+        enableBackToHomeToolbar(false);
 
         Intent intent = getIntent();
         Photo photo = (Photo) intent.getSerializableExtra("PHOTO_TRANSFER");

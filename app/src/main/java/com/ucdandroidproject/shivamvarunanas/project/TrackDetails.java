@@ -25,6 +25,8 @@ public class TrackDetails extends AppCompatActivity implements View.OnClickListe
 
         photoIcon = findViewById(R.id.imageView_Photo);
         videoIcon = findViewById(R.id.imageView_Video);
+
+        setTitle(track1.getTrackName());
     }
 
 

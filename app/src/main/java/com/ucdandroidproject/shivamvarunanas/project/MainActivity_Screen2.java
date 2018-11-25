@@ -16,9 +16,9 @@ public class MainActivity_Screen2 extends AppCompatActivity implements View.OnCl
     Button track1;
     Button track2;
     void initializeTracks(){
-        Track track = new Track("UCD","", "", "YvipzNysA7E");
+        Track track = new Track("UCD","", "", "YvipzNysA7E",1);
         tracks.add(track);
-        track = new Track("Blackrock Dublin", "", "","Odu5CLUhRqg" );
+        track = new Track("Blackrock Park", "", "","Odu5CLUhRqg",2 );
         tracks.add(track);
     }
 

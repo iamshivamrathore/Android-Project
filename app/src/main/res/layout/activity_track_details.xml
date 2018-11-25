@@ -11,7 +11,7 @@
         android:layout_width="96dp"
         android:layout_height="96dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,9 +22,46 @@
         android:id="@+id/imageView_Photo"
         android:layout_width="96dp"
         android:layout_height="96dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="32dp"
         app:layout_constraintEnd_toEndOf="@+id/imageView_Video"
         app:layout_constraintStart_toStartOf="@+id/imageView_Video"
         app:layout_constraintTop_toBottomOf="@+id/imageView_Video"
         app:srcCompat="@drawable/images_icon" />
+
+    <TextView
+        android:id="@+id/textView_stats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="STATS"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/imageView_Photo"
+        app:layout_constraintStart_toStartOf="@+id/imageView_Photo"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_Photo" />
+
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/mapView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="@+id/textView_stats"
+        app:layout_constraintStart_toStartOf="@+id/textView_stats"
+        app:layout_constraintTop_toBottomOf="@+id/textView_stats" />
+
+    <TextView
+        android:id="@+id/textView_run"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="RUN!"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/textView_stats"
+        app:layout_constraintStart_toStartOf="@+id/textView_stats"
+        app:layout_constraintTop_toBottomOf="@+id/mapView" />
+
+
 </android.support.constraint.ConstraintLayout>

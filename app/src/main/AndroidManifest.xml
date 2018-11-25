@@ -25,11 +25,9 @@
         <activity
             android:name=".PhotoDetailActivity"
             android:label="@string/title_activity_photo_detail"
-            android:parentActivityName=".MainActivity_Screen_Photos"
+
             android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ucdandroidproject.shivamvarunanas.project.MainActivity_Screen_Photos" />
+
         </activity>
 
 
