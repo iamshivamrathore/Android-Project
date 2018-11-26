@@ -4,10 +4,10 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-public class BaseActivity extends AppCompatActivity {
+public class TopActivityScreen2 extends AppCompatActivity {
     static final String FLICKR_QUERY = "FLICKR_QUERY";
     static final String PHOTO_TRANSFER = "PHOTO_TRANSFER";
-    private static final String TAG = "BaseActivity";
+    private static final String TAG = "TopActivityScreen2";
 
 
     void enableBackToHomeToolbar    (boolean enableHome) {

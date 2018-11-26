@@ -16,9 +16,9 @@ public class MainActivity_Screen2 extends AppCompatActivity implements View.OnCl
     Button track1;
     Button track2;
     void initializeTracks(){
-        Track track = new Track("UCD","", "", "YvipzNysA7E",1);
+        Track track = new Track("UCD","53.5", "-6.5", "YvipzNysA7E",1);
         tracks.add(track);
-        track = new Track("Blackrock Park", "", "","Odu5CLUhRqg",2 );
+        track = new Track("Central Park", "40", "-73.3","wjn8QcZzmQA",2 );
         tracks.add(track);
     }
 
@@ -28,7 +28,7 @@ public class MainActivity_Screen2 extends AppCompatActivity implements View.OnCl
         setContentView(R.layout.activity_main__screen2);
         initializeTracks();
         track1 = findViewById(R.id.button_ucd);
-        track2 = findViewById(R.id.button_blackrock);
+        track2 = findViewById(R.id.button_Track2);
     }
 
     @Override
@@ -48,8 +48,8 @@ public class MainActivity_Screen2 extends AppCompatActivity implements View.OnCl
             case R.id.button_ucd:
                 intent.putExtra("TRACK", tracks.get(0));
                 break;
-            case R.id.blackrock_image :
-            case R.id.button_blackrock:
+            case R.id.track2_Image:
+            case R.id.button_Track2:
                 intent.putExtra("TRACK", tracks.get(1));
                 break;
         }

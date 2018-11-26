@@ -10,9 +10,9 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity_Screen_Photos extends BaseActivity implements GetDataFromFlickr_JSON.OnDataAvailable, RecyclerItemClickListener.OnRecyclerClickListener {
+public class MainActivity_Screen2_Screen_Photos extends TopActivityScreen2 implements GetDataFromFlickr_JSON.DataAvailableToWork, ClickListener_RecyclerItem.OnClickListener_RecyclerItem {
     private static final String TAG = "MainActivity";
-    private FlickrRecyclerViewAdapter flickrRecyclerViewAdapter;
+    private RecyclerViewAdapter_FLICKR recyclerViewAdapterFLICKR;
     Track track = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,9 +23,9 @@ public class MainActivity_Screen_Photos extends BaseActivity implements GetDataF
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, recyclerView, this));
-        flickrRecyclerViewAdapter = new FlickrRecyclerViewAdapter(this, new ArrayList<Photo>());
-        recyclerView.setAdapter(flickrRecyclerViewAdapter);
+        recyclerView.addOnItemTouchListener(new ClickListener_RecyclerItem(this, recyclerView, this));
+        recyclerViewAdapterFLICKR = new RecyclerViewAdapter_FLICKR(this, new ArrayList<Photo>());
+        recyclerView.setAdapter(recyclerViewAdapterFLICKR);
         setTitle("Track");
 //        GetRawData getRawData = new GetRawData(this);
 //        getRawData.execute("https://api.flickr.com/services/feeds/photos_public.gne?tags=android,nougat,sdk&tagmode=any&format=json&nojsoncallback=1");
@@ -36,16 +36,16 @@ public class MainActivity_Screen_Photos extends BaseActivity implements GetDataF
     @Override
     public void onItemClick(View view, int position) {
         Log.d(TAG, "onItemClick: ");
-        Intent intent = new Intent(this, PhotoDetailActivity.class);
-        intent.putExtra(PHOTO_TRANSFER, flickrRecyclerViewAdapter.getPhoto(position));
+        Intent intent = new Intent(this, PhotoDetailActivityScreen2.class);
+        intent.putExtra(PHOTO_TRANSFER, recyclerViewAdapterFLICKR.getPhoto(position));
         startActivity(intent);
     }
 
     @Override
     public void onItemLongClick(View view, int position) {
         Log.d(TAG, "onItemLongClick: ");
-        Intent intent = new Intent(this, PhotoDetailActivity.class);
-        intent.putExtra(PHOTO_TRANSFER, flickrRecyclerViewAdapter.getPhoto(position));
+        Intent intent = new Intent(this, PhotoDetailActivityScreen2.class);
+        intent.putExtra(PHOTO_TRANSFER, recyclerViewAdapterFLICKR.getPhoto(position));
         startActivity(intent);
     }
 
@@ -58,7 +58,7 @@ public class MainActivity_Screen_Photos extends BaseActivity implements GetDataF
         Log.d(TAG, "onResume starts with intent : "+track.getTrackName());
         super.onResume();
         GetDataFromFlickr_JSON getDataFromFlickrJSON = new GetDataFromFlickr_JSON(this, "https://api.flickr.com/services/feeds/photos_public.gne", "en-us", false);
-//        getDataFromFlickrJSON.executeOnSameThread("android, nougat");
+//        getDataFromFlickrJSON.runInSameThread("android, nougat");
         getDataFromFlickrJSON.execute(track.getTrackName());
         setTitle(track.getTrackName());
         Log.d(TAG, "onResume ends");
@@ -71,8 +71,8 @@ public class MainActivity_Screen_Photos extends BaseActivity implements GetDataF
     @Override
     public void onDataAvailable(List<Photo> data, DownloadStatus status) {
 
-        if(status == DownloadStatus.OK) {
-            flickrRecyclerViewAdapter.loadNewData(data);
+        if(status == DownloadStatus.SUCCESS) {
+            recyclerViewAdapterFLICKR.loadNewData(data);
         } else {
             // download or processing failed
             Log.e(TAG, "onDataAvailable failed with status " + status);

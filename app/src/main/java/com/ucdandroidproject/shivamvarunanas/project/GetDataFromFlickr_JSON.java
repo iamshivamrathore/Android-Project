@@ -11,46 +11,48 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+/*Created by Shivam Rathore
+This class parses the retrieved JSON to create a list of photo objects*/
 
-class GetDataFromFlickr_JSON extends AsyncTask<String, Void, List<Photo>> implements GetRawData.OnDownloadComplete {
+class GetDataFromFlickr_JSON extends AsyncTask<String, Void, List<Photo>> implements GetRawData.DownloadComplete {
     private static final String TAG = "GetDataFromFlickr_JSON";
 
     private List<Photo> mPhotoList = null;
-    private String mBaseURL;
-    private String mLanguage;
-    private boolean mMatchAll;
+    private String URL;
+    private String lang;
+    private boolean match;
 
-    private final OnDataAvailable mCallBack;
+    private final DataAvailableToWork dataAvailableCallback;
     private boolean runningOnSameThread = false;
 
-    interface OnDataAvailable {
+    interface DataAvailableToWork {
         void onDataAvailable(List<Photo> data, DownloadStatus status);
     }
 
-    public GetDataFromFlickr_JSON(OnDataAvailable callBack, String baseURL, String language, boolean matchAll) {
+    public GetDataFromFlickr_JSON(DataAvailableToWork callBack, String baseURL, String language, boolean matchAll) {
         Log.d(TAG, "GetDataFromFlickr_JSON called");
-        mBaseURL = baseURL;
-        mCallBack = callBack;
-        mLanguage = language;
-        mMatchAll = matchAll;
+        URL = baseURL;
+        dataAvailableCallback = callBack;
+        lang = language;
+        match = matchAll;
     }
 
-    void executeOnSameThread(String searchCriteria) {
-        Log.d(TAG, "executeOnSameThread starts");
+    void runInSameThread(String searchCriteria) {
+        Log.d(TAG, "runInSameThread starts");
         runningOnSameThread = true;
-        String destinationUri = createUri(searchCriteria, mLanguage, mMatchAll);
+        String destinationUri = createUri(searchCriteria, lang, match);
 
         GetRawData getRawData = new GetRawData(this);
         getRawData.execute(destinationUri);
-        Log.d(TAG, "executeOnSameThread ends");
+        Log.d(TAG, "runInSameThread ends");
     }
 
     @Override
     protected void onPostExecute(List<Photo> photos) {
         Log.d(TAG, "onPostExecute starts");
 
-        if(mCallBack != null) {
-            mCallBack.onDataAvailable(mPhotoList, DownloadStatus.OK);
+        if(dataAvailableCallback != null) {
+            dataAvailableCallback.onDataAvailable(mPhotoList, DownloadStatus.SUCCESS);
         }
         Log.d(TAG, "onPostExecute ends");
     }
@@ -58,10 +60,10 @@ class GetDataFromFlickr_JSON extends AsyncTask<String, Void, List<Photo>> implem
     @Override
     protected List<Photo> doInBackground(String... params) {
         Log.d(TAG, "doInBackground starts");
-        String destinationUri = createUri(params[0], mLanguage, mMatchAll);
+        String destinationUri = createUri(params[0], lang, match);
 
         GetRawData getRawData = new GetRawData(this);
-        getRawData.runInSameThread(destinationUri);
+        getRawData.run_CurrentThread(destinationUri);
         Log.d(TAG, "doInBackground ends");
         return mPhotoList;
     }
@@ -69,7 +71,7 @@ class GetDataFromFlickr_JSON extends AsyncTask<String, Void, List<Photo>> implem
     private String createUri(String searchCriteria, String lang, boolean matchAll) {
         Log.d(TAG, "createUri starts");
 
-        return Uri.parse(mBaseURL).buildUpon()
+        return Uri.parse(URL).buildUpon()
                 .appendQueryParameter("tags", searchCriteria)
                 .appendQueryParameter("tagmode", matchAll ? "ALL" : "ANY")
                 .appendQueryParameter("lang", lang)
@@ -79,10 +81,10 @@ class GetDataFromFlickr_JSON extends AsyncTask<String, Void, List<Photo>> implem
     }
 
     @Override
-    public void onDownloadComplete(String data, DownloadStatus status) {
-        Log.d(TAG, "onDownloadComplete starts. Status = " + status);
+    public void DownloadCompleted(String data, DownloadStatus status) {
+        Log.d(TAG, "DownloadCompleted starts. Status = " + status);
 
-        if(status == DownloadStatus.OK) {
+        if(status == DownloadStatus.SUCCESS) {
             mPhotoList = new ArrayList<>();
 
             try {
@@ -104,21 +106,21 @@ class GetDataFromFlickr_JSON extends AsyncTask<String, Void, List<Photo>> implem
                     Photo photoObject = new Photo(title, author, authorId, link, tags, photoUrl);
                     mPhotoList.add(photoObject);
 
-                    Log.d(TAG, "onDownloadComplete " + photoObject.toString());
+                    Log.d(TAG, "DownloadCompleted " + photoObject.toString());
                 }
             } catch(JSONException jsone) {
                 jsone.printStackTrace();
-                Log.e(TAG, "onDownloadComplete: Error processing Json data " + jsone.getMessage());
-                status = DownloadStatus.FAILED_OR_EMPTY;
+                Log.e(TAG, "DownloadCompleted: Error processing Json data " + jsone.getMessage());
+                status = DownloadStatus.INVALID;
             }
         }
 
-        if(runningOnSameThread && mCallBack != null) {
+        if(runningOnSameThread && dataAvailableCallback != null) {
             // now inform the caller that processing is done - possibly returning null if there
             // was an error
-            mCallBack.onDataAvailable(mPhotoList, status);
+            dataAvailableCallback.onDataAvailable(mPhotoList, status);
         }
 
-        Log.d(TAG, "onDownloadComplete ends");
+        Log.d(TAG, "DownloadCompleted ends");
     }
 }

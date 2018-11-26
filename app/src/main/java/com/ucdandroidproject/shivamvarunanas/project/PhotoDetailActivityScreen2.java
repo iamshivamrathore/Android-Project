@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-public class PhotoDetailActivity extends BaseActivity {
+public class PhotoDetailActivityScreen2 extends TopActivityScreen2 {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

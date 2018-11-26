@@ -3,60 +3,60 @@ package com.ucdandroidproject.shivamvarunanas.project;
 import java.io.Serializable;
 
 /*Created by Shivam Rathore
-* 
+* Represents the Photo Object
 * */
 class Photo implements Serializable {
 
 
-    private String mTitle;
-    private String mAuthor;
-    private String mAuthorId;
-    private String mLink;
-    private String mTags;
-    private String mImage;
+    private String photoTitle;
+    private String photoAuthor;
+    private String photoAuthorId;
+    private String photoLink;
+    private String photoTags;
+    private String photoImage;
 
     public Photo(String title, String author, String authorId, String link, String tags, String image) {
-        mTitle = title;
-        mAuthor = author;
-        mAuthorId = authorId;
-        mLink = link;
-        mTags = tags;
-        mImage = image;
+        photoTitle = title;
+        photoAuthor = author;
+        photoAuthorId = authorId;
+        photoLink = link;
+        photoTags = tags;
+        photoImage = image;
     }
 
     String getTitle() {
-        return mTitle;
+        return photoTitle;
     }
 
     String getAuthor() {
-        return mAuthor;
+        return photoAuthor;
     }
 
     String getAuthorId() {
-        return mAuthorId;
+        return photoAuthorId;
     }
 
     String getLink() {
-        return mLink;
+        return photoLink;
     }
 
     String getTags() {
-        return mTags;
+        return photoTags;
     }
 
     String getImage() {
-        return mImage;
+        return photoImage;
     }
 
     @Override
     public String toString() {
         return "Photo{" +
-                "mTitle='" + mTitle + '\'' +
-                ", mAuthor='" + mAuthor + '\'' +
-                ", mAuthorId='" + mAuthorId + '\'' +
-                ", mLink='" + mLink + '\'' +
-                ", mTags='" + mTags + '\'' +
-                ", mImage='" + mImage + '\'' +
+                "photoTitle='" + photoTitle + '\'' +
+                ", photoAuthor='" + photoAuthor + '\'' +
+                ", photoAuthorId='" + photoAuthorId + '\'' +
+                ", photoLink='" + photoLink + '\'' +
+                ", photoTags='" + photoTags + '\'' +
+                ", photoImage='" + photoImage + '\'' +
                 '}';
     }
 }
