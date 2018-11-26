@@ -26,9 +26,9 @@ public class DatabaseHelper_Firebase {
     }
 
 
-    public static ArrayList<String> getData(String ID){
+    public static void getData(String ID, final OneMethodInterface oneMethodInterface) {
 
-        Log.d(TAG, "getData: -!-!  ID : "+ID);
+        Log.d(TAG, "getData: -!-!  ID : " + ID);
         final ArrayList<String> prop = new ArrayList<>();
         prop.clear();
         FirebaseDatabase.getInstance().getReference(ID).addValueEventListener(new ValueEventListener() {
@@ -38,23 +38,23 @@ public class DatabaseHelper_Firebase {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     String a = snapshot.getValue(String.class);
                     prop.add(a);
-                    Log.i("value: ", a );
+                    Log.i("value: ", a);
                 }
 
-                Log.d(TAG, "onDataChange: -!-! : Size: "+prop.size());
+                oneMethodInterface.doSomething(prop);
+                Log.d(TAG, "onDataChange: -!-! : Size: " + prop.size());
 
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                oneMethodInterface.doSomething(false);
             }
 
-                
+
         });
 
-        Log.d(TAG, "getData: Here : -!-! size : "+prop.size());
-        return prop;
+        Log.d(TAG, "getData: Here : -!-! size : " + prop.size());
     }
 
 //    public String getTime(int ID){

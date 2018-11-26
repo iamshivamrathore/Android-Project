@@ -42,7 +42,7 @@ public class TrackDetails extends AppCompatActivity implements View.OnClickListe
     public void onLocationChanged(Location location) {
         latitude = location.getLatitude();
         longitude = location.getLongitude();
-     //   Toast.makeText(this, "Current Location: " + location.getLatitude() + ", " + location.getLongitude(), Toast.LENGTH_LONG).show();
+        //   Toast.makeText(this, "Current Location: " + location.getLatitude() + ", " + location.getLongitude(), Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -111,29 +111,33 @@ public class TrackDetails extends AppCompatActivity implements View.OnClickListe
                 String uri = String.format(Locale.ENGLISH, "geo:%s,%s", track1.latitude, track1.longitude);
                 intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
                 break;
-                // startActivity(intent1);
+            // startActivity(intent1);
             case R.id.textView_run:
-                Log.d(TAG, "onClick: Track !!!!!_____: "+track1.getLatitude()+" , "+track1.getLongitude());
-                Log.d(TAG, "onClick: Current !!!!!_____: "+latitude+" , "+longitude);
+                Log.d(TAG, "onClick: Track !!!!!_____: " + track1.getLatitude() + " , " + track1.getLongitude());
+                Log.d(TAG, "onClick: Current !!!!!_____: " + latitude + " , " + longitude);
                 if (new Double(track1.getLatitude()).intValue() == new Double(latitude).intValue() && new Double(track1.getLongitude()).intValue() == new Double(longitude).intValue()) {
                     intent = new Intent(this, MainActivity_Screen1.class);
                     intent.putExtra("TRACK_ID", track1.trackId);
-                }else{
+                } else {
                     Toast.makeText(this, "You are not at the track!", Toast.LENGTH_LONG).show();
                 }
 
                 break;
 
             case R.id.textView_stats:
-                String name = "Emulator";
-                String time = "Emulated Time";
-                ArrayList<String> record = DatabaseHelper_Firebase.getData(track1.trackId+"");
-                Log.d(TAG, "onClick: -!-! Record : "+record);
-                if(record!= null && record.size() >0){
-                    name = record.get(1);
-                    time = record.get(2);
-                }
-                Toast.makeText(this,"Track Record is held by "+name+" and the best time is : "+time, Toast.LENGTH_LONG).show();
+                final String name = "Emulator";
+                final String time = "Emulated Time";
+                DatabaseHelper_Firebase.getData(track1.trackId + "", new OneMethodInterface() {
+                    @Override
+                    public void doSomething(Object object) {
+                        if (object instanceof Boolean) {
+                            showError();
+                        } else if (object instanceof ArrayList) {
+                            ArrayList<String> record = (ArrayList<String>) object;
+                            chnageMethodNameAcordingly(name, time, record);
+                        }
+                    }
+                });
                 break;
         }
 
@@ -141,6 +145,19 @@ public class TrackDetails extends AppCompatActivity implements View.OnClickListe
             intent.putExtra("TRACK", track1);
             startActivity(intent);
         }
+    }
+
+    private void showError() {
+        Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
+    }
+
+    private void chnageMethodNameAcordingly(String name, String time, ArrayList<String> record) {
+        Log.d(TAG, "onClick: -!-! Record : " + record);
+        if (record != null && record.size() > 0) {
+            name = record.get(1);
+            time = record.get(2);
+        }
+        Toast.makeText(this, "Track Record is held by " + name + " and the best time is : " + time, Toast.LENGTH_LONG).show();
     }
 
     void getLocation() {

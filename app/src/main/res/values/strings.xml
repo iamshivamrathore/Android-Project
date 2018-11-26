@@ -14,8 +14,9 @@
     <string name="ContentDescription_UCDTrack">Image for Track 1</string>
     <string name="Track2_Image">Track2 Image</string>
     <string name="VideoIcon">Video Icon</string>
-    <string name="Stats_Tile">Stats</string>
+    <string name="Stats_Tile">STATS</string>
     <string name="Run_Title">RUN</string>
     <string name="Content_Description_MapView">Map View</string>
     <string name="ContentDescription_ImageViewIcon">Image View Icon</string>
+    <string name="Activity_Main_Tracks">Tracks</string>
 </resources>
