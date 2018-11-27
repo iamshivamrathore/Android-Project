@@ -37,8 +37,9 @@ public class ImgCapture extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        if(data!=null && data.getExtras().get("data")!=null){
         Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-        imageView.setImageBitmap(bitmap);
+        imageView.setImageBitmap(bitmap);}
     }
 
     public void getPermission() {
