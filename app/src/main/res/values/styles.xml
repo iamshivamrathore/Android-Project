@@ -1,16 +1,24 @@
 <resources>
 
-    <color name="primary">@color/md_light_blue_500</color>
-    <color name="primary_dark">@color/md_light_blue_800</color>
-    <color name="primary_light">@color/md_light_blue_100</color>
-    <color name="accent">@color/md_indigo_700</color>
-    <color name="primary_text">@color/md_grey_900</color>
-    <color name="secondary_text">@color/md_grey_600</color>
-    <color name="icons">@color/md_white_1000</color>
-    <color name="divider">@color/md_red_400</color>
+    <!--<color name="primary">@color/md_light_blue_500 </color>-->
+    <!--<color name="primary_dark">@color/md_light_blue_900</color>-->
+    <!--<color name="primary_light">@color/md_light_blue_50</color>-->
+    <!--<color name="accent">@color/md_indigo_700</color>-->
+    <!--<color name="primary_text">@color/md_grey_900</color>-->
+    <!--<color name="secondary_text">@color/md_grey_600</color>-->
+    <!--<color name="icons">@color/md_blue_900</color>-->
+    <!--<color name="divider">@color/md_red_400</color>-->
+    <color name="primary">#009688</color>
+    <color name="primary_dark">#00796B</color>
+    <color name="primary_light">#ECEFF1</color>
+    <color name="accent">#607D8B</color>
+    <color name="primary_text">#212121</color>
+    <color name="secondary_text">#757575</color>
+    <color name="icons">#FFFFFF</color>
+    <color name="divider">#BDBDBD</color>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>

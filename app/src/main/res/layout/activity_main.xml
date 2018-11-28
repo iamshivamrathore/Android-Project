@@ -44,9 +44,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:text="RUN NOW"
-
-        android:textStyle="normal|bold" />
+        android:background="@drawable/button_rounded"
+        android:text="RUN NOW" />
 
     <TextView
         android:id="@+id/textView"
@@ -58,20 +57,21 @@
         android:text="V.A.S"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large.Inverse"
-        android:textSize="36sp"
+        android:textSize="30sp"
         android:textStyle="normal|bold"
         android:typeface="sans" />
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="218dp"
+        android:layout_height="62dp"
         android:layout_alignBottom="@+id/btn_run"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="103dp"
+        android:layout_marginBottom="90dp"
         android:text="Fitness Guru"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large.Inverse"
+        android:textColor="@color/md_blue_grey_600"
         android:textSize="36sp"
         android:textStyle="normal|bold"
         android:typeface="sans" />
