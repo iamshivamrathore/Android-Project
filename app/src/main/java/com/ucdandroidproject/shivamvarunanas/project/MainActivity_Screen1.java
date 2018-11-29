@@ -6,12 +6,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.PermissionChecker;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -22,13 +25,19 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import static com.ucdandroidproject.shivamvarunanas.project.R.color.accent;
+import static com.ucdandroidproject.shivamvarunanas.project.R.color.primary_light;
+
 public class MainActivity_Screen1 extends AppCompatActivity {
 
+    static final int REQUEST_CODE_ACCESS_LOCATION = 1;
     private static final String TAG = "MainActivity_Screen1";
+    private static boolean ACCSES_LOCATION_GRANTED = false;
     public boolean start = false;
     DatabaseHelper mDatabaseHelper; //added by me
     boolean running;
     Double s;
+    Drawable d;
     Double currSpeed;
     String shownDistance;
     private ArrayList<DetailsActivity> userActMonitoring;
@@ -40,10 +49,42 @@ public class MainActivity_Screen1 extends AppCompatActivity {
     private Chronometer cm;
     private int trackId;
 
+    void checkPermission() {
+        int hasAccessLocation = PermissionChecker.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
+        Log.d(TAG, "checkPermission: = " + hasAccessLocation);
+        if (hasAccessLocation == PackageManager.PERMISSION_GRANTED) {
+            Log.d(TAG, "checkPermission: Granted");
+            ACCSES_LOCATION_GRANTED = true;
+        } else {
+            Log.d(TAG, "checkPermission: Requesting ");
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_CODE_ACCESS_LOCATION);
+
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        Log.d(TAG, "onRequestPermissionsResult: Starts");
+        switch (requestCode) {
+            case REQUEST_CODE_ACCESS_LOCATION: {
+                if (grantResults.length >= 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                    Log.d(TAG, "onRequestPermissionsResult: true");
+                    ACCSES_LOCATION_GRANTED = true;
+                } else {
+                    Toast.makeText(this, "Cannot Function without access to Location. Please Grant Permission", Toast.LENGTH_LONG).show();
+                    Log.d(TAG, "onRequestPermissionsResult: Exit");
+                    finish();
+
+                }
+            }
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        checkPermission();
+        s = new Double(0);
         setContentView(R.layout.activity_main_screen1);
         Intent intent = getIntent();
         trackId = intent.getIntExtra("TRACK_ID", 0);
@@ -56,11 +97,11 @@ public class MainActivity_Screen1 extends AppCompatActivity {
         distanceTra = (TextView) findViewById(R.id.userDistance);
 
         cm = (Chronometer) findViewById(R.id.chronometerTime);
-
+        d = cm.getBackground();
         startBtn = (Button) findViewById(R.id.btn_start);
         stopBtn = (Button) findViewById(R.id.btn_stop);
         resetBtn = (Button) findViewById(R.id.btn_reset);
-        getPermission();
+        //getPermission();
 
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
@@ -77,7 +118,7 @@ public class MainActivity_Screen1 extends AppCompatActivity {
                     Double userSpeed = (double) location.getSpeed();
                     user.setSpeed(userSpeed * 3.6);
                     s = userSpeed * 3.6;
-                     currSpeed = 0.0;
+                    currSpeed = 0.0;
 
                     if (userActMonitoring.isEmpty()) {
                         currSpeed = s;
@@ -138,7 +179,8 @@ public class MainActivity_Screen1 extends AppCompatActivity {
             public void onClick(View view) {
                 endTracker(ll);
                 reset();
-                cm.setBackgroundColor(Color.parseColor("#3498DB"));
+                cm.setBackground(d);
+            //    cm.setBackgroundColor(Color.parseColor("#3498DB"));
                 cm.setTextColor(Color.parseColor("#F4F4F4"));
             }
         });
@@ -150,7 +192,9 @@ public class MainActivity_Screen1 extends AppCompatActivity {
                     cm.start();
                     enableTracker(ll);
                     start = true;
+
                     cm.setBackgroundColor(Color.parseColor("#96ED89"));
+                    cm.setBackgroundColor(getResources().getColor(R.color.accent));
                     cm.setTextColor(Color.parseColor("#393939"));
                     running = true;
                 } else
@@ -165,6 +209,7 @@ public class MainActivity_Screen1 extends AppCompatActivity {
                 Intent userSummary = new Intent(MainActivity_Screen1.this, SummaryActivity.class);
                 endTracker(ll);
                 Bundle userData = new Bundle();
+                cm.setBackgroundColor(getResources().getColor(primary_light));
                 running = false;
                 if (!userActMonitoring.isEmpty()) {
                     userData.putInt("avgSpeed", (int) Math.round(getAvgSpeed()));
@@ -200,7 +245,7 @@ public class MainActivity_Screen1 extends AppCompatActivity {
                 reset();
                 userSummary.putExtras(userData);
                 startActivity(userSummary);
-                cm.setBackgroundColor(Color.parseColor("#3498DB"));
+           //     cm.setBackgroundColor(Color.parseColor("#3498DB"));
                 cm.setTextColor(Color.parseColor("#F4F4F4"));
             }
         });
@@ -209,16 +254,16 @@ public class MainActivity_Screen1 extends AppCompatActivity {
     }
 
     //first get user permission to track him
-    public void getPermission() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            String PERMISSIONS_REQUIRED[] = new String[]{
-                    Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-            };
-            ActivityCompat.requestPermissions(this, PERMISSIONS_REQUIRED, 1);
-        }
-    }
+//    public void getPermission() {
+//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+//                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            String PERMISSIONS_REQUIRED[] = new String[]{
+//                    Manifest.permission.ACCESS_COARSE_LOCATION,
+//                    Manifest.permission.ACCESS_FINE_LOCATION
+//            };
+//            ActivityCompat.requestPermissions(this, PERMISSIONS_REQUIRED, 1);
+//        }
+//    }
 
 
     public void enableTracker(LocationListener ll) {
