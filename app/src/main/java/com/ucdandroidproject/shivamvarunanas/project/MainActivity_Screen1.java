@@ -85,6 +85,7 @@ public class MainActivity_Screen1 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         checkPermission();
         s = new Double(0);
+        currSpeed = new Double(0);
         setContentView(R.layout.activity_main_screen1);
         Intent intent = getIntent();
         trackId = intent.getIntExtra("TRACK_ID", 0);
