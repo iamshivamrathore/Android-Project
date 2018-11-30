@@ -26,8 +26,8 @@
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:background="@drawable/button_rounded"
         android:layout_marginTop="16dp"
+        android:background="@drawable/button_rounded"
         android:text="@string/RunScreenStopButton"
         app:layout_constraintEnd_toEndOf="@+id/btn_start"
         app:layout_constraintStart_toStartOf="@+id/btn_start"
@@ -44,8 +44,8 @@
         android:layout_marginBottom="8dp"
         android:text="@string/RunScreenResetButton"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/chronometerTime"
-        app:layout_constraintStart_toStartOf="@+id/chronometerTime"
+        app:layout_constraintEnd_toEndOf="@+id/btn_stop"
+        app:layout_constraintStart_toStartOf="@+id/btn_stop"
         app:layout_constraintTop_toBottomOf="@+id/btn_stop"
         app:layout_constraintVertical_bias="0.2" />
 
@@ -89,10 +89,9 @@
 
     <Chronometer
         android:id="@+id/chronometerTime"
-        android:layout_width="164dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
 
         android:gravity="center"
@@ -101,6 +100,7 @@
 
         android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.468"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userDistance" />
 
@@ -110,15 +110,16 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/button_rounded"
         android:elevation="@dimen/cardview_default_elevation"
         android:padding="8dp"
         android:text="@string/RunScreenStart"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chronometerTime" />
+        app:layout_constraintStart_toEndOf="@+id/title"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.41000003" />
 
 </android.support.constraint.ConstraintLayout>
 
