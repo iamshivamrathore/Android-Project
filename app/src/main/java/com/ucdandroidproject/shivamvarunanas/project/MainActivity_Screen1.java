@@ -195,7 +195,7 @@ public class MainActivity_Screen1 extends AppCompatActivity {
                     start = true;
 
                     cm.setBackgroundColor(Color.parseColor("#96ED89"));
-                    cm.setBackgroundColor(getResources().getColor(R.color.accent));
+                    cm.setBackgroundColor(getResources().getColor(R.color.primary_dark));
                     cm.setTextColor(Color.parseColor("#393939"));
                     running = true;
                 } else
