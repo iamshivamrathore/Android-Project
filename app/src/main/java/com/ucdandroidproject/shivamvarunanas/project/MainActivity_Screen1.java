@@ -28,6 +28,13 @@ import java.util.ArrayList;
 import static com.ucdandroidproject.shivamvarunanas.project.R.color.accent;
 import static com.ucdandroidproject.shivamvarunanas.project.R.color.primary_light;
 
+/*CREATED BY ANAS
+* This class handles all the the sending the of the data so depending on what the user clicks on
+* here the user is going to preform the run
+* here we are calculating all the relvent information which we will pass on to the graph view
+* for example how long it took to preform every km
+*/
+
 public class MainActivity_Screen1 extends AppCompatActivity {
 
     static final int REQUEST_CODE_ACCESS_LOCATION = 1;
@@ -199,10 +206,10 @@ public class MainActivity_Screen1 extends AppCompatActivity {
                     cm.start();
                     enableTracker(ll);
                     start = true;
-
-                    cm.setBackgroundColor(Color.parseColor("#96ED89"));
-                    cm.setBackgroundColor(getResources().getColor(R.color.primary_dark));
-                    cm.setTextColor(Color.parseColor("#393939"));
+//
+//                    cm.setBackgroundColor(Color.parseColor("#96ED89"));
+//                    cm.setBackgroundColor(getResources().getColor(R.color.primary_dark));
+//                    cm.setTextColor(Color.parseColor("#393939"));
                     running = true;
                 } else
                     Toast.makeText(MainActivity_Screen1.this, "Tracking has Commence", Toast.LENGTH_LONG).show();
@@ -214,6 +221,7 @@ public class MainActivity_Screen1 extends AppCompatActivity {
         stopBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                double distanceInMetres = 0;
                 Intent userSummary = new Intent(MainActivity_Screen1.this, SummaryActivity.class);
                 endTracker(ll);
                 Bundle userData = new Bundle();
@@ -249,16 +257,18 @@ public class MainActivity_Screen1 extends AppCompatActivity {
                     //array list to store the times and pass on to the next activity
                     ArrayList<Integer> graphData = graphData();
                     userData.putIntegerArrayList("graphArray", graphData);
+                    distanceInMetres = dist;
                 }
 
 
                 reset();
 
                 userSummary.putExtra("TRACK_ID",trackId);
+                userSummary.putExtra("DISTANCE_IN_METRES",distanceInMetres);
                 userSummary.putExtras(userData);
                 startActivity(userSummary);
            //     cm.setBackgroundColor(Color.parseColor("#3498DB"));
-                cm.setTextColor(Color.parseColor("#F4F4F4"));
+           //     cm.setTextColor(Color.parseColor("#F4F4F4"));
             }
         });
 
