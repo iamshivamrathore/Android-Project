@@ -210,6 +210,7 @@ public class MainActivity_Screen1 extends AppCompatActivity {
             }
         });
 
+        //functionality to add to the database has been created by Varun Garg
         stopBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -264,17 +265,6 @@ public class MainActivity_Screen1 extends AppCompatActivity {
 
     }
 
-    //first get user permission to track him
-//    public void getPermission() {
-//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-//                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//            String PERMISSIONS_REQUIRED[] = new String[]{
-//                    Manifest.permission.ACCESS_COARSE_LOCATION,
-//                    Manifest.permission.ACCESS_FINE_LOCATION
-//            };
-//            ActivityCompat.requestPermissions(this, PERMISSIONS_REQUIRED, 1);
-//        }
-//    }
 
 
     public void enableTracker(LocationListener ll) {
@@ -337,6 +327,7 @@ public class MainActivity_Screen1 extends AppCompatActivity {
         return times;
     }
 
+    //Method that adds tp local DB created by Varun Garg
     public void AddData(String newEntry_1, String newEntry_2) {
         boolean insertData = mDatabaseHelper.addData(newEntry_1, newEntry_2);
 

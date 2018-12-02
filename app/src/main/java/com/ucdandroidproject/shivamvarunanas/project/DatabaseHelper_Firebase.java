@@ -37,10 +37,11 @@ public class DatabaseHelper_Firebase {
 
     public static void getData(String ID, final OneMethodInterface oneMethodInterface) {
 
+
         Log.d(TAG, "getData: -!-!  ID : " + ID);
         final ArrayList<String> prop = new ArrayList<>();
         prop.clear();
-        FirebaseDatabase.getInstance().getReference(ID).addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference(ID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -52,6 +53,7 @@ public class DatabaseHelper_Firebase {
 
                 oneMethodInterface.doSomething(prop);
                 Log.d(TAG, "onDataChange: -!-! : Size: " + prop.size());
+
 
             }
 

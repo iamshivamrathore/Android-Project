@@ -26,6 +26,8 @@ public class SummaryActivity extends Activity {
     String enteredName = null;
 
     String TAG = "SummaryActivity";
+
+    //Method to display the toast for the current record holder
     private void chnageMethodNameAcordingly(String name, String time, ArrayList<String> record) {
         Log.d(TAG, "onClick: -!-! Record : " + record);
 
@@ -33,15 +35,11 @@ public class SummaryActivity extends Activity {
             name = record.get(1);
             time = record.get(2);
         }
-        Toast.makeText(this, "Track Record is held by " + name + " and the best time is : " + time, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Current Track Record is held by " + name + " and the best time is : " + time + " seconds", Toast.LENGTH_LONG).show();
         Log.d(TAG, "Name is" + time);
     }
 
-    @Override
-    protected void onPause(){
-        super.onPause();
 
-    }
 
     private void showError() {
         Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
@@ -69,15 +67,6 @@ public class SummaryActivity extends Activity {
             totalTime="0";
         }
         userData = data.getIntegerArrayList("graphArray");
-        //
-
-
-
-
-
-
-        //
-        //ArrayList<String> record = (ArrayList<String>) getIntent().getSerializableExtra("record");
 
         final Intent intent = getIntent();
         final String name = "Emulator";
@@ -87,6 +76,9 @@ public class SummaryActivity extends Activity {
 
 
 
+        /*
+        Below if block and the associated methods have been created by Varun Garg to check if the person has beaten the time of the previous person or not
+         */
         if(trackId == 1){
 
             String time_to_beat = intent.getStringExtra("TIME_TO_BEAT");
@@ -112,8 +104,8 @@ public class SummaryActivity extends Activity {
 
                             final AlertDialog.Builder alert = new AlertDialog.Builder(SummaryActivity.this);
 
-                            alert.setTitle("Title");
-                            alert.setMessage("Message");
+                            alert.setTitle("Congratulations! You have set a new track record!");
+                            alert.setMessage("Please enter your name!");
                             final EditText input = new EditText(SummaryActivity.this);
                             alert.setView(input);
                             alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -151,8 +143,6 @@ public class SummaryActivity extends Activity {
                 }
             });
         }
-
-        //Log.d(TAG, "onClick: -!-! Record : " + record);
 
 
 
