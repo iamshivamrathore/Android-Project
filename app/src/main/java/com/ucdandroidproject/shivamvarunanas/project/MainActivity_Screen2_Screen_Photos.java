@@ -10,6 +10,8 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
+/*Created by SHIVAM RATHORE.
+This class represents the screen which appears when we click on the photo tab*/
 public class MainActivity_Screen2_Screen_Photos extends TopActivityScreen2 implements GetDataFromFlickr_JSON.DataAvailableToWork, ClickListener_RecyclerItem.OnClickListener_RecyclerItem {
 
     Track track = null;
