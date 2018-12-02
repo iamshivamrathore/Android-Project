@@ -36,6 +36,7 @@ public class MainActivity_Screen1 extends AppCompatActivity {
     public boolean start = false;
     DatabaseHelper mDatabaseHelper; //added by me
     boolean running;
+
     Double s;
     Drawable d;
     Double currSpeed;
@@ -62,6 +63,8 @@ public class MainActivity_Screen1 extends AppCompatActivity {
         }
     }
 
+
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         Log.d(TAG, "onRequestPermissionsResult: Starts");
@@ -80,6 +83,8 @@ public class MainActivity_Screen1 extends AppCompatActivity {
         }
     }
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,11 +92,12 @@ public class MainActivity_Screen1 extends AppCompatActivity {
         s = new Double(0);
         currSpeed = new Double(0);
         setContentView(R.layout.activity_main_screen1);
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         trackId = intent.getIntExtra("TRACK_ID", 0);
         Log.d(TAG, "onCreate: -------" + trackId);
         userActMonitoring = new ArrayList<DetailsActivity>();
         mDatabaseHelper = new DatabaseHelper(this);
+
 
         currentSpeed = (TextView) findViewById(R.id.userSpeed);
         averageSpeed = (TextView) findViewById(R.id.userAvgSpeed);
@@ -227,14 +233,15 @@ public class MainActivity_Screen1 extends AppCompatActivity {
 
                     long totalTime = userActMonitoring.get(userActMonitoring.size() - 1).getTime();
                     String userTime = "" + totalTime;
+                    userSummary.putExtra("TIME_TO_BEAT",userTime);
                     userData.putString("userTotalTime", userTime);
                     //code to add to DB
                     String user_distance = "" + dist;
 
-                    if (distance.length() != 0) {
+                    if (dist != 0) {
                         AddData(user_distance, userTime);
                     } else {
-                        toastMessage("You must put something in the text field!");
+                        toastMessage("You must run!");
                     }
 
                     //
@@ -243,7 +250,10 @@ public class MainActivity_Screen1 extends AppCompatActivity {
                     userData.putIntegerArrayList("graphArray", graphData);
                 }
 
+
                 reset();
+
+                userSummary.putExtra("TRACK_ID",trackId);
                 userSummary.putExtras(userData);
                 startActivity(userSummary);
            //     cm.setBackgroundColor(Color.parseColor("#3498DB"));

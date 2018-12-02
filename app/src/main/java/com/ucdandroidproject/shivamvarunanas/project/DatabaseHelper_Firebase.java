@@ -11,20 +11,29 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+
+/*
+Created by Varun Garg
+This class handles the functionality of firebase
+ */
 public class DatabaseHelper_Firebase {
 
 
     private static final String TAG = "DatabaseHelper_Firebase";
-    public static void addToFirebase(){
+
+    //method to write to firebase
+    public static void addToFirebase(String trackID, String time, String Name){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference track1 = database.getReference("0");
-        DatabaseReference track2 = database.getReference("1");
-        track2.child("time").setValue("100");
-        track2.child("distance").setValue("2000");
-        track2.child("name").setValue("Varun");
+
+        DatabaseReference track = database.getReference(trackID);
+        track.child("time").setValue(time);
+        track.child("distance").setValue("2000");
+        track.child("name").setValue(Name);
 
     }
 
+
+    //method to get from firebase
 
     public static void getData(String ID, final OneMethodInterface oneMethodInterface) {
 

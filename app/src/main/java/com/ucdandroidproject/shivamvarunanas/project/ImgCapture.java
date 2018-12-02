@@ -12,6 +12,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+/*
+Created by Varun Garg
+This class handles the functionality of clicking an image
+ */
 public class ImgCapture extends AppCompatActivity {
 
     ImageView imageView;
@@ -34,6 +38,7 @@ public class ImgCapture extends AppCompatActivity {
     }
 
     @Override
+    //Lets the user know the result of an activity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -42,6 +47,7 @@ public class ImgCapture extends AppCompatActivity {
         imageView.setImageBitmap(bitmap);}
     }
 
+    //Checks if the permission is there and if not, gets it
     public void getPermission() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ) {
             String PERMISSIONS_REQUIRED[] = new String[]{
